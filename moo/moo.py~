@@ -41,11 +41,11 @@ def root():
 def insert_user():
     output=None
     result=room.insert_user(request.json)
-    if result['resp_code']== 201 :
+    if result['resp_code']==201:
         output={"success":True,"id":result["id"]}
     else:
         output ={"success":False}
-    response.status=result['resp_code']
+    response.status=result["resp_code"]
     response.add_header("Content-Type","application/json")
     return output
 
