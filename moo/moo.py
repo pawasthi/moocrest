@@ -38,18 +38,24 @@ def root():
 #
 #
 @route('/user', method='POST')
-def create_user():
-    status=None
-    result=room.create_user(request.json)
-    if result['resp_code']== 201 :
-        status={"success":True,"id":result["id"]}
-    else:
-        status ={"success":False}
-    response.status=result['resp_code']
+def create_user(self, jsondata):
+    print "-> create:user", jsondata
+    try:
+         cnt = self.usercollection.find({"email":jsondata["email"]}).count()
+         if cnt == 0:
+             obj_id = self.usercollection.insert(jsondata)
+             obj_id = str(obj_id) 
+             respcode = 201     
+         else:
+             userdetails = self.usercollection.find({"email":jsondata["email"]})
+             obj_id = userdetails["_id"]
+             obj_id= str(obj_id)
+             respcode = 409
+         return {"resp_code":respcode,"id":obj_id}
+     except:
+         print "Server Error"
+         return 500
 
-    fmt = __format(request)
-    response.content_type = __response_format(fmt)
-    return status
 
 #
 #
