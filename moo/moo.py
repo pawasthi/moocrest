@@ -356,6 +356,107 @@ def list_quiz():
     response.content_type = __response_format(fmt)
     return result
 
+
+##Announcement collections
+
+#
+#
+@route('/announcements', method='POST')
+def add_announce():
+    print "hi"
+    status=None
+    result=room.add_announce(request.json)
+    if result['resp_code']== 201 :
+        status={"success":True,"id":result["id"]}
+    else:
+        status ={"success":False}
+        response.status=result['resp_code']
+
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
+
+#
+#
+@route('/announcement/:id', method='GET')
+def get_announce(id):
+    status=None
+    result=room.get_announce(id)
+
+    if result == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif result == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return result
+
+#
+#
+@route('/announcement/:id', method='DELETE')
+def delete_announce(id):
+    status=None
+    result=room.delete_announce(id)
+
+    if result == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif result == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
+
+#
+#
+@route('/announcement/update/:id', method='PUT')
+def update_announce(id):
+    status=None
+    result=room.update_announce(id,request.json)
+
+    if result == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif result == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
+
+#
+#
+@route('/announcement/list', method='GET')
+def list_announce():
+    status=None
+    result=room.list_announce()
+
+    if result == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif result == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return result
+
+
 ##Category collections
 
 @route('/category',method= 'POST')

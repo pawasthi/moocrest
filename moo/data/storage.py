@@ -16,6 +16,7 @@ class Storage(object):
       self.categorycollection=db['categorycollection']
       self.coursecollection=db['coursecollection']
       self.quizcollection=db['quizcollection']
+      self.announcecollection=db['announcementcollection']
       # self.data = {}
       # for demo
       # self.data['created'] = time.ctime()
@@ -268,6 +269,81 @@ class Storage(object):
                quizlist.append(quiz)
           
           return { "success" : True, "list" : quizlist };
+      
+      except:
+          print "Server Error"
+          return 500
+      
+##Announcement collection
+
+   def add_announce(self, jsondata):
+      print "---> add_announce:", jsondata
+      try:
+          obj_id = self.announcecollection.insert(jsondata)
+          obj_id = str(obj_id) 
+          respcode = 201     
+          return {"resp_code":respcode,"id":obj_id}
+      
+      except:
+          print "Server Error"
+          return 500
+
+   def get_announce(self,id):
+      print "---> get:announce", id
+      try:    
+          id = ObjectId(id)
+          #print id
+          cnt = self.announcecollection.find({"_id":id}).count()
+          print "cnt", cnt
+          if cnt == 0:
+              return 404   
+          else:
+              for announce in self.announcecollection.find({"_id":id}):
+                  return {"id": str(id),"courseId": announce["courseId"],"title": announce["title"],"description":announce["description"],"postDate": announce["postDate"],"status": announce["status"]}
+      except:
+          print "Server Error"
+          return 500
+
+   def update_announce(self,announceid,jsondata):
+      print "---> update:announce", jsondata
+      try:
+          id = ObjectId(announceid)
+          print id
+          cnt = self.announcecollection.find({"_id":id}).count()
+          print "cnt" , cnt
+          if cnt == 0:
+              return 201     
+          else:
+              self.announcecollection.update({"_id":id}, jsondata)
+              return 200
+      except:
+          print "Server Error"
+          return 500
+
+   def delete_announce(self, announceid):
+      print "---> delete:announce", announceid
+      try:
+          id = ObjectId(announceid)
+          print id
+          cnt = self.announcecollection.find({"_id":id}).count()
+          if cnt == 0:
+              return 404   
+          else:
+              self.announcecollection.remove({"_id":id})     
+              return 200 
+      except:
+          print "Server Error"
+          return 500
+
+   def list_announce(self):
+      print "---> list:announce"
+      try:    
+          announcelist = []
+          for announce in self.announcecollection.find():
+               announce["_id"] = str(announce["_id"])
+               announcelist.append(announce)
+          
+          return { "success" : True, "list" : announcelist };
       
       except:
           print "Server Error"
