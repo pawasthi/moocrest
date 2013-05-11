@@ -45,11 +45,12 @@ def create_user():
         status={"success":True,"id":result["id"]}
     else:
         status ={"success":False}
-    response.status=result['resp_code']
+        response.status=result['resp_code']
 
     fmt = __format(request)
     response.content_type = __response_format(fmt)
     return status
+
 
 #
 #
@@ -70,6 +71,7 @@ def get_user(emailid):
     fmt = __format(request)
     response.content_type = __response_format(fmt)
     return result
+
 @route('/category',method= 'POST')
 def add_category():
     status=None
@@ -81,10 +83,33 @@ def add_category():
     response.status=result['resp_code']
 
 
+<<<<<<< HEAD
+@route('/category/:name', method='GET')
+def get_category(name):
+    status=None
+    result=room.get_category(name)
+
+    if result == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif result == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return result
+
+@route('/category/update/:catname',method='PUT')
+# def update_category():
+=======
     fmt = __format(request)
     response.content_type = __response_format(fmt)
     return status
     
+>>>>>>> e68a34be4f2a101cae150e57263f6bdf7e3fc14f
 
 #
 #
