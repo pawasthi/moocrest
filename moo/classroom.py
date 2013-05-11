@@ -56,6 +56,8 @@ class Room(object):
    def insert_category(self,category):
        return self.__store.insert_category(category) 
 
+   def delete_user(self,emailid):
+        return self.__store.delete_user(emailid)
    #
    # example: find data
    #
