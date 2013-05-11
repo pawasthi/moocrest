@@ -74,6 +74,8 @@ class Room(object):
    def drop_course(self,courseid, emailid):
         return self.__store.drop_course(courseid, emailid)
     
+   def insert_quiz(self, json_obj):
+       return self.__store.insert_quiz(json_obj) 
 #
    # example: find data
    #

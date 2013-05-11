@@ -45,12 +45,11 @@ def create_user():
         status={"success":True,"id":result["id"]}
     else:
         status ={"success":False}
-        response.status=result['resp_code']
+    response.status=result['resp_code']
 
     fmt = __format(request)
     response.content_type = __response_format(fmt)
     return status
-
 
 #
 #
@@ -101,12 +100,6 @@ def get_category(name):
     fmt = __format(request)
     response.content_type = __response_format(fmt)
     return result
-
-
-    
-
-    
-
 
 #
 #
@@ -192,6 +185,20 @@ def drop_course():
     fmt = __format(request)
     response.content_type = __response_format(fmt)
     return status
+
+@route('/quizzes', method='POST')
+def add_quiz():
+   status = None
+   result = room.insert_quiz(request.json)
+   if result["res_code"] == 201:
+      status = {"success" : True, "id": result["id"]}
+   else:
+      status = {"success" : False}
+    
+   fmt = __format(request)
+   response.content_type = __response_format(fmt)
+   return status
+
 
 @route('/moo/ping', method='GET')
 def ping():

@@ -142,13 +142,13 @@ class Storage(object):
                respcode=201
            else: 
                categorydetails=self.categorycollection.find(query) 
-               obj_id = str(obj_id)
+               obj_id = ObjectId(catgorydetails)
                respcode=409
            return {"resp_code":respcode,"id":obj_id} 
         except:
             print "Server Error"
             return {"resp_code":500,"id":obj_id}
-        query={"name":category[""]}
+   
    
    def get_category(self,category):
        print "---> get category", category
@@ -163,8 +163,19 @@ class Storage(object):
        except:
            print "Server Error"
            return 500
+       
+   def insert_quiz(self, jsondata):
+       print "---> add:Quiz", jsondata
+       try:
+           obj_id = self.quizcollection.insert(jsondata)
+           obj_id= str(obj_id)
+           respcode = 201
+           return {"res_code":respcode,"id":obj_id}
+       except:
+           print "Server Error"
+           return {"res_code":500,"id":obj_id}
                   
-               
+   #def list_quiz(self,):            
    
    
        
