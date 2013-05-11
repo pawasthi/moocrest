@@ -38,23 +38,18 @@ def root():
 #
 #
 @route('/user', method='POST')
-def create_user(self, jsondata):
-    print "-> create:user", jsondata
-    try:
-         cnt = self.usercollection.find({"email":jsondata["email"]}).count()
-         if cnt == 0:
-             obj_id = self.usercollection.insert(jsondata)
-             obj_id = str(obj_id) 
-             respcode = 201     
-         else:
-             userdetails = self.usercollection.find({"email":jsondata["email"]})
-             obj_id = userdetails["_id"]
-             obj_id= str(obj_id)
-             respcode = 409
-         return {"resp_code":respcode,"id":obj_id}
-     except:
-         print "Server Error"
-         return 500
+def create_user():
+    status=None
+    result=room.create_user(request.json)
+    if result['resp_code']== 201 :
+        status={"success":True,"id":result["id"]}
+    else:
+        status ={"success":False}
+        response.status=result['resp_code']
+
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
 
 
 #
@@ -87,15 +82,7 @@ def add_category():
         status ={"success":False}
     response.status=result['resp_code']
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 57e8ef7f4a3cce4d2461811593bb47487280e59a
-    fmt = __format(request)
-    response.content_type = __response_format(fmt)
-    return status
-    
-<<<<<<< HEAD
 @route('/category/:name', method='GET')
 def get_category(name):
     status=None
@@ -116,13 +103,7 @@ def get_category(name):
 
 @route('/category/update/:catname',method='PUT')
 # def update_category():
-    
-=======
-<<<<<<< HEAD
-=======
 
->>>>>>> 57e8ef7f4a3cce4d2461811593bb47487280e59a
->>>>>>> 832a00479a726691f3647f4ee76d48e8a8857250
 #
 #
 @route('/user/:emailid', method='DELETE')
@@ -142,10 +123,6 @@ def delete_user(emailid):
     fmt = __format(request)
     response.content_type = __response_format(fmt)
     return status
-<<<<<<< HEAD
-=======
-
->>>>>>> 57e8ef7f4a3cce4d2461811593bb47487280e59a
 
 #
 #

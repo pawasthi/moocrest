@@ -35,6 +35,7 @@ class Storage(object):
           print "Server Error"
           return 500
 
+
    def get_user(self, emailid):
       print "---> get:user", emailid
       try:
