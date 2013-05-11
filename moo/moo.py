@@ -81,6 +81,20 @@ def add_category():
         status ={"success":False}
     response.status=result['resp_code']
 
+@route('/category/list',method='GET')
+def list_category():
+    retcode =200
+    list=room.list_category()
+    if list == None:
+        retcode=500
+        list={'success':False}
+    else:
+        retcode =200
+
+    response.status=retcode
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return list
 
 
 @route('/category/:name', method='GET')
@@ -186,18 +200,6 @@ def drop_course():
     response.content_type = __response_format(fmt)
     return status
 
-@route('/quizzes', method='POST')
-def add_quiz():
-   status = None
-   result = room.insert_quiz(request.json)
-   if result["res_code"] == 201:
-      status = {"success" : True, "id": result["id"]}
-   else:
-      status = {"success" : False}
-    
-   fmt = __format(request)
-   response.content_type = __response_format(fmt)
-   return status
 
 
 @route('/moo/ping', method='GET')

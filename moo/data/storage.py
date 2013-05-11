@@ -4,6 +4,7 @@ Storage interface
 
 import time
 from pymongo import Connection
+from bson.objectid import ObjectId
 
 class Storage(object):
  
@@ -174,8 +175,14 @@ class Storage(object):
        except:
            print "Server Error"
            return {"res_code":500,"id":obj_id}
+
+
+
+
+
+
                   
-   #def list_quiz(self,):            
+            
    
    
        
