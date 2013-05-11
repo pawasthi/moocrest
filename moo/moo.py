@@ -38,35 +38,37 @@ def root():
 #
 #
 @route('/user', method='POST')
-def insert_user():
-    output=None
-    result=room.insert_user(request.json)
+def create_user():
+    status=None
+    result=room.create_user(request.json)
     if result['resp_code']== 201 :
-        output={"success":True,"id":result["id"]}
+        status={"success":True,"id":result["id"]}
     else:
-        output ={"success":False}
+        status ={"success":False}
     response.status=result['resp_code']
-    response.add_header("Content-Type","application/json")
-    return output
+
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
 
 #
 #
 @route('/user/:emailid', method='GET')
 def get_user(emailid):
-    output=None
+    status=None
     result=room.get_user(emailid)
 
-    if result == 404 : #['resp_code'] == 404 :
+    if result == 404 : 
         response.status = 404
-        output={"success":False}
-    elif result == 500 :#['resp_code'] == 500:
+        status={"success":False}
+    elif result == 500 :
         response.status = 500
-        output={"success":False}
+        status={"success":False}
     else :
-        output={"success":True}
+        status={"success":True}
         
-    print output
-    response.add_header("Content-Type","application/json")
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
     return result
 
 

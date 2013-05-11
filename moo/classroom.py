@@ -47,8 +47,8 @@ class Room(object):
       # create storage
       self.__store = Storage()
       
-   def insert_user(self,jsondata):
-        return self.__store.insert_user(jsondata)
+   def create_user(self,jsondata):
+        return self.__store.create_user(jsondata)
     
    def get_user(self,emailid):
         return self.__store.get_user(emailid)

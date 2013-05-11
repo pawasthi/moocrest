@@ -16,44 +16,50 @@ class Storage(object):
       # for demo
       # self.data['created'] = time.ctime()
 
-   def insert_user(self, jsondata):
-      print "---> insert:user", jsondata
+   def create_user(self, jsondata):
+      print "---> create:user", jsondata
       try:
-          query = {"email":jsondata["email"]}
-          cnt = self.usercollection.find(query).count()
+          cnt = self.usercollection.find({"email":jsondata["email"]}).count()
           if cnt == 0:
               obj_id = self.usercollection.insert(jsondata)
               obj_id = str(obj_id) 
               respcode = 201     
           else:
-              respcode = 409
-              userdetails = self.usercollection.find(query)
+              userdetails = self.usercollection.find({"email":jsondata["email"]})
               obj_id = userdetails["_id"]
               obj_id= str(obj_id)
+              respcode = 409
           return {"resp_code":respcode,"id":obj_id}
       except:
           print "Server Error"
           return {"resp_code":500,"id":obj_id}
 
    def get_user(self, emailid):
+      print "---> get:user", emailid
       try:
-          query = {"email":emailid}
-          cnt = self.usercollection.find(query).count()
+          cnt = self.usercollection.find({"email":emailid}).count()
           if cnt == 0:
-              return 404#{"resp_code":404}    
+              return 404   
           else:
-              #userdetail = self.usercollection.findOne(query)
-              #print userdetail['email']
-              #response = {"email": userdetail["email"],"own": userdetail["own"],"enrolled": userdetail["enrolled"],"quizzes": userdetail["quizzes"]}
-              #return response
-              
-              for c in self.usercollection.find(query):
+              for c in self.usercollection.find({"email":emailid}):
                   return {"email": c["email"],"own": c["own"],"enrolled": c["enrolled"],"quizzes": c["quizzes"]}
       except:
           print "Server Error"
-          return 500 #{"resp_code":500}
+          return 500
 
-       
+   def delete_user(self, emailid):
+      print "---> delete:user", emailid
+      try:
+          cnt = self.usercollection.find({"email":emailid}).count()
+          if cnt == 0:
+              return 404   
+          else:
+              self.user.remove({"email":emailid})     
+              return 200 
+      except:
+          print "Server Error"
+          return 500
+
    def remove(self, name):
       print "---> remove:", name
 
