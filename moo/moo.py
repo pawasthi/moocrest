@@ -41,6 +41,7 @@ def root():
 def create_user():
     status=None
     result=room.create_user(request.json)
+    #print result["id"]
     if result['resp_code']== 201 :
         status={"success":True,"id":result["id"]}
     else:
@@ -71,6 +72,7 @@ def get_user(emailid):
     response.content_type = __response_format(fmt)
     return result
 
+<<<<<<< HEAD
 @route('/category',method= 'POST')
 def add_category():
     status=None
@@ -115,6 +117,8 @@ def get_category(name):
     response.content_type = __response_format(fmt)
     return result
 
+=======
+>>>>>>> 3691921b11031e122a5aedf0eafa040abaad3ee6
 #
 #
 @route('/user/:emailid', method='DELETE')
@@ -185,6 +189,8 @@ def drop_course():
     data = data.split("?")
     email = data[0].split("=")[1]
     courseid = data[1].split("=")[1]
+    print email
+    print courseid
     result=room.drop_course(courseid,email)
     if result == 500 :
         response.status = 500
@@ -200,7 +206,346 @@ def drop_course():
     response.content_type = __response_format(fmt)
     return status
 
+<<<<<<< HEAD
 
+=======
+## Course collections
+
+#
+#
+@route('/course', method='POST')
+def add_course():
+    status=None
+    result=room.add_course(request.json)
+    if result['resp_code']== 201 :
+        status={"success":True,"id":result["id"]}
+    else:
+        status ={"success":False}
+        response.status=result['resp_code']
+
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
+
+#
+#
+@route('/course/:id', method='GET')
+def get_course(id):
+    status=None
+    result=room.get_course(id)
+
+    if result == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif result == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return result
+
+#
+#
+@route('/course/update/:id', method='PUT')
+def update_course(id):
+    status=None
+    result=room.update_course(id,request.json)
+
+    if result == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif result == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
+
+#
+#
+@route('/course/:id', method='DELETE')
+def delete_course(id):
+    status=None
+    result=room.delete_course(id)
+
+    if result == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif result == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
+
+#
+#
+@route('/course/list', method='GET')
+def list_course():
+    status=None
+    result=room.list_course()
+
+    if result == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif result == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return result
+
+##Quiz collections
+
+#
+#
+@route('/quizzes', method='POST')
+def add_quiz():
+    status=None
+    result=room.add_quiz(request.json)
+    if result['resp_code']== 201 :
+        status={"success":True,"id":result["id"]}
+    else:
+        status ={"success":False}
+        response.status=result['resp_code']
+
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
+
+#
+#
+@route('/quiz/:id', method='GET')
+def get_quiz(id):
+    status=None
+    result=room.get_quiz(id)
+
+    if result == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif result == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return result
+
+#
+#
+@route('/quiz/:id', method='DELETE')
+def delete_quiz(id):
+    status=None
+    result=room.delete_quiz(id)
+
+    if result == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif result == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
+
+#
+#
+@route('/quiz/update/:id', method='PUT')
+def update_quiz(id):
+    status=None
+    result=room.update_quiz(id,request.json)
+
+    if result == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif result == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
+
+#
+#
+@route('/quiz/list', method='GET')
+def list_quiz():
+    status=None
+    result=room.list_quiz()
+
+    if result == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif result == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return result
+
+
+##Announcement collections
+
+#
+#
+@route('/announcements', method='POST')
+def add_announce():
+    print "hi"
+    status=None
+    result=room.add_announce(request.json)
+    if result['resp_code']== 201 :
+        status={"success":True,"id":result["id"]}
+    else:
+        status ={"success":False}
+        response.status=result['resp_code']
+
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
+
+#
+#
+@route('/announcement/:id', method='GET')
+def get_announce(id):
+    status=None
+    result=room.get_announce(id)
+
+    if result == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif result == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return result
+
+#
+#
+@route('/announcement/:id', method='DELETE')
+def delete_announce(id):
+    status=None
+    result=room.delete_announce(id)
+
+    if result == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif result == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
+
+#
+#
+@route('/announcement/update/:id', method='PUT')
+def update_announce(id):
+    status=None
+    result=room.update_announce(id,request.json)
+
+    if result == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif result == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
+
+#
+#
+@route('/announcement/list', method='GET')
+def list_announce():
+    status=None
+    result=room.list_announce()
+
+    if result == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif result == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return result
+
+
+##Category collections
+
+@route('/category',method= 'POST')
+def add_category():
+    status=None
+    result=room.insert_category(request.json)
+    if result['resp_code']== 201 :
+        status={"success":True,"id":result["id"]}
+    else:
+        status ={"success":False}
+    response.status=result['resp_code']
+    
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
+
+@route('/category/:name', method='GET')
+def get_category(name):
+    status=None
+    result=room.get_category(name)
+
+    if result == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif result == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return result
+
+@route('/category/update/:catname',method='PUT')
+def update_category():
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
+>>>>>>> 3691921b11031e122a5aedf0eafa040abaad3ee6
 
 @route('/moo/ping', method='GET')
 def ping():
