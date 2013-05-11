@@ -56,26 +56,11 @@ class Room(object):
    def insert_category(self,category):
        return self.__store.insert_category(category) 
 
+   def update_user(self,emailid):
+        return self.__store.update_user(emailid)
+    
    def delete_user(self,emailid):
         return self.__store.delete_user(emailid)
-<<<<<<< HEAD
-    
-   def get_category(self,category):
-       return self.__store.get_category(category) 
-
-   def update_user(self,emailid):
-        return self.__store.update_user(emailid)
-=======
-
-    
-   def get_category(self,category):
-       return self.__store.get_category(category) 
-
-
-   def update_user(self,emailid):
-        return self.__store.update_user(emailid)
-
->>>>>>> 5b7f5a6635921badc85d81a92ffcf6147d16fbd2
 
    def enroll_course(self,courseid, emailid):
         return self.__store.enroll_course(courseid, emailid)
@@ -83,11 +68,9 @@ class Room(object):
    def drop_course(self,courseid, emailid):
         return self.__store.drop_course(courseid, emailid)
     
-<<<<<<< HEAD
-   #
-=======
-#
->>>>>>> 5b7f5a6635921badc85d81a92ffcf6147d16fbd2
+   def get_category(self,category):
+       return self.__store.get_category(category) 
+    
    # example: find data
    #
    def find(self,name):
