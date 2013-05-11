@@ -52,6 +52,9 @@ class Room(object):
     
    def get_user(self,emailid):
         return self.__store.get_user(emailid)
+   
+   def insert_category(self,category):
+       return self.__store.insert_category(category) 
 
    #
    # example: find data
