@@ -50,8 +50,8 @@ class Room(object):
    def insert_user(self,jsondata):
         return self.__store.insert_user(jsondata)
     
-   def get_user(self,jsondata):
-        return self.__store.get_user(jsondata)
+   def get_user(self,emailid):
+        return self.__store.get_user(emailid)
 
    #
    # example: find data

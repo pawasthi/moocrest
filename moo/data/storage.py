@@ -36,19 +36,22 @@ class Storage(object):
           return {"resp_code":500,"id":obj_id}
 
    def get_user(self, emailid):
-      print "---> get:user", emailid
       try:
           query = {"email":emailid}
           cnt = self.usercollection.find(query).count()
           if cnt == 0:
-              return {"resp_code":404}    
+              return 404#{"resp_code":404}    
           else:
-              userdetail = self.usercollection.find(query)
-              reponse = {"email": userdetail["email"],"own": userdetail["own"],"enrolled": userdetail["enrolled"],"quizzes": userdetail["quizzes"]}
-              return response
+              #userdetail = self.usercollection.findOne(query)
+              #print userdetail['email']
+              #response = {"email": userdetail["email"],"own": userdetail["own"],"enrolled": userdetail["enrolled"],"quizzes": userdetail["quizzes"]}
+              #return response
+              
+              for c in self.usercollection.find(query):
+                  return {"email": c["email"],"own": c["own"],"enrolled": c["enrolled"],"quizzes": c["quizzes"]}
       except:
           print "Server Error"
-          return {"resp_code":500}
+          return 500 #{"resp_code":500}
 
        
    def remove(self, name):

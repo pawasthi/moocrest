@@ -53,18 +53,21 @@ def insert_user():
 #
 @route('/user/:emailid', method='GET')
 def get_user(emailid):
-    print emailid
     output=None
     result=room.get_user(emailid)
-    if result['resp_code'] == 404 :
+
+    if result == 404 : #['resp_code'] == 404 :
         response.status = 404
         output={"success":False}
-    elif result['resp_code'] == 500:
+    elif result == 500 :#['resp_code'] == 500:
         response.status = 500
         output={"success":False}
+    else :
+        output={"success":True}
         
+    print output
     response.add_header("Content-Type","application/json")
-    return output
+    return result
 
 
 @route('/moo/ping', method='GET')
