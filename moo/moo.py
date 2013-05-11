@@ -219,6 +219,26 @@ def update_course(id):
 
 #
 #
+@route('/course/:id', method='DELETE')
+def delete_course(id):
+    status=None
+    result=room.delete_course(id)
+
+    if result == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif result == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
+
+#
+#
 @route('/course/list', method='GET')
 def list_course():
     status=None

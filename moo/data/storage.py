@@ -165,6 +165,21 @@ class Storage(object):
           print "Server Error"
           return 500
 
+   def delete_course(self, courseid):
+      print "---> delete:course", courseid
+      try:
+          id = ObjectId(courseid)
+          print id
+          cnt = self.coursecollection.find({"_id":id}).count()
+          if cnt == 0:
+              return 404   
+          else:
+              self.coursecollection.remove({"_id":id})     
+              return 200 
+      except:
+          print "Server Error"
+          return 500
+
    def list_course(self):
       print "---> list:course"
       try:    
