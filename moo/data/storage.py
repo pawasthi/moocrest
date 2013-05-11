@@ -25,16 +25,19 @@ class Storage(object):
       print "---> create:user", jsondata
       try:
           cnt = self.usercollection.find({"email":jsondata["email"]}).count()
+          #print cnt
           if cnt == 0:
               obj_id = self.usercollection.insert(jsondata)
               obj_id = str(obj_id) 
               respcode = 201     
+              return {"resp_code":respcode,"id":obj_id}
           else:
               userdetails = self.usercollection.find({"email":jsondata["email"]})
-              obj_id = userdetails["_id"]
-              obj_id= str(obj_id)
+              #print userdetails
+              #obj_id = userdetails["_id"]
+              #obj_id= str(obj_id)
               respcode = 409
-          return {"resp_code":respcode,"id":obj_id}
+              return {"resp_code":respcode}
       except:
           print "Server Error"
           return 500
@@ -116,6 +119,7 @@ class Storage(object):
          return 500
 
 ##Course collections
+
    def add_course(self, jsondata):
       print "---> add_course:", jsondata
       try:

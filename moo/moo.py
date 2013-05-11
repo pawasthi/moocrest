@@ -41,6 +41,7 @@ def root():
 def create_user():
     status=None
     result=room.create_user(request.json)
+    #print result["id"]
     if result['resp_code']== 201 :
         status={"success":True,"id":result["id"]}
     else:

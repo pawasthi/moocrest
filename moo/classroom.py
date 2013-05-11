@@ -104,6 +104,23 @@ class Room(object):
 
    def list_quiz(self):
         return self.__store.list_quiz()
+
+##Announcement collections
+   def add_announce(self,jsondata):
+        return self.__store.add_announce(jsondata)
+
+   def get_announce(self,announceid):
+        return self.__store.get_announce(announceid)
+    
+   def update_announce(self,announceid,jsondata):
+        return self.__store.update_announce(announceid,jsondata)
+    
+   def delete_announce(self,announceid):
+        return self.__store.delete_announce(announceid)
+
+   def list_announce(self):
+        return self.__store.list_announce()
+
    # example: find data
    #
    def find(self,name):
