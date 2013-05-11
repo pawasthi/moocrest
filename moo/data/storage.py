@@ -12,6 +12,7 @@ class Storage(object):
       connection = Connection()              
       db = connection['moocdb']
       self.usercollection = db['usercollection']
+      self.categorycollection=db['categorycollection']
       # self.data = {}
       # for demo
       # self.data['created'] = time.ctime()
