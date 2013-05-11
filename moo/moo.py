@@ -80,10 +80,18 @@ def add_category():
         status ={"success":False}
     response.status=result['resp_code']
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 57e8ef7f4a3cce4d2461811593bb47487280e59a
     fmt = __format(request)
     response.content_type = __response_format(fmt)
     return status
     
+<<<<<<< HEAD
+=======
+
+>>>>>>> 57e8ef7f4a3cce4d2461811593bb47487280e59a
 #
 #
 @route('/user/:emailid', method='DELETE')
@@ -103,6 +111,10 @@ def delete_user(emailid):
     fmt = __format(request)
     response.content_type = __response_format(fmt)
     return status
+<<<<<<< HEAD
+=======
+
+>>>>>>> 57e8ef7f4a3cce4d2461811593bb47487280e59a
 
 #
 #
