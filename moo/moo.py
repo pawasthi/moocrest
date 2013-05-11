@@ -159,12 +159,14 @@ def drop_course():
     response.content_type = __response_format(fmt)
     return status
 
+## Course collections
+
 #
 #
-@route('/user', method='POST')
+@route('/course', method='POST')
 def add_course():
     status=None
-    result=room.create_user(request.json)
+    result=room.add_course(request.json)
     if result['resp_code']== 201 :
         status={"success":True,"id":result["id"]}
     else:
@@ -175,6 +177,7 @@ def add_course():
     response.content_type = __response_format(fmt)
     return status
 
+##Category collections
 
 @route('/category',method= 'POST')
 def add_category():
@@ -185,6 +188,10 @@ def add_category():
     else:
         status ={"success":False}
     response.status=result['resp_code']
+    
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
 
 @route('/category/:name', method='GET')
 def get_category(name):

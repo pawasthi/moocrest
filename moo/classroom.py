@@ -46,16 +46,14 @@ class Room(object):
 
       # create storage
       self.__store = Storage()
-      
+
+##user Collection
    def create_user(self,jsondata):
         return self.__store.create_user(jsondata)
     
    def get_user(self,emailid):
         return self.__store.get_user(emailid)
-   
-   def insert_category(self,category):
-       return self.__store.insert_category(category) 
-
+    
    def update_user(self,emailid):
         return self.__store.update_user(emailid)
     
@@ -67,9 +65,17 @@ class Room(object):
 
    def drop_course(self,courseid, emailid):
         return self.__store.drop_course(courseid, emailid)
+
+##Category Collection
+   def insert_category(self,category):
+       return self.__store.insert_category(category) 
     
    def get_category(self,category):
        return self.__store.get_category(category) 
+
+##Course Collection
+   def add_course(self,jsondata):
+        return self.__store.add_course(jsondata)
     
    # example: find data
    #
