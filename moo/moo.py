@@ -70,6 +70,9 @@ def get_user(emailid):
     fmt = __format(request)
     response.content_type = __response_format(fmt)
     return result
+
+#
+#
 @route('/category',method= 'POST')
 def add_category():
     status=None
@@ -80,18 +83,6 @@ def add_category():
         status ={"success":False}
     response.status=result['resp_code']
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 57e8ef7f4a3cce4d2461811593bb47487280e59a
-    fmt = __format(request)
-    response.content_type = __response_format(fmt)
-    return status
-    
-<<<<<<< HEAD
-=======
-
->>>>>>> 57e8ef7f4a3cce4d2461811593bb47487280e59a
 #
 #
 @route('/user/:emailid', method='DELETE')
@@ -111,10 +102,6 @@ def delete_user(emailid):
     fmt = __format(request)
     response.content_type = __response_format(fmt)
     return status
-<<<<<<< HEAD
-=======
-
->>>>>>> 57e8ef7f4a3cce4d2461811593bb47487280e59a
 
 #
 #
@@ -166,6 +153,8 @@ def drop_course():
     data = data.split("?")
     email = data[0].split("=")[1]
     courseid = data[1].split("=")[1]
+    print email
+    print courseid
     result=room.drop_course(courseid,email)
     if result == 500 :
         response.status = 500

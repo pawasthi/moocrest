@@ -107,7 +107,7 @@ class Storage(object):
              return 400     
          else:
              self.usercollection.update({"email":email}, 
-                                        {'pull': {'enrolled': courseid}}
+                                        {"$pull": {"enrolled": courseid}}
                                         )
          return 200
       except:
