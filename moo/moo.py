@@ -87,11 +87,15 @@ def add_category():
         status ={"success":False}
     response.status=result['resp_code']
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 57e8ef7f4a3cce4d2461811593bb47487280e59a
     fmt = __format(request)
     response.content_type = __response_format(fmt)
     return status
     
+<<<<<<< HEAD
 @route('/category/:name', method='GET')
 def get_category(name):
     status=None
@@ -113,6 +117,12 @@ def get_category(name):
 @route('/category/update/:catname',method='PUT')
 # def update_category():
     
+=======
+<<<<<<< HEAD
+=======
+
+>>>>>>> 57e8ef7f4a3cce4d2461811593bb47487280e59a
+>>>>>>> 832a00479a726691f3647f4ee76d48e8a8857250
 #
 #
 @route('/user/:emailid', method='DELETE')
@@ -132,7 +142,10 @@ def delete_user(emailid):
     fmt = __format(request)
     response.content_type = __response_format(fmt)
     return status
+<<<<<<< HEAD
+=======
 
+>>>>>>> 57e8ef7f4a3cce4d2461811593bb47487280e59a
 
 #
 #
@@ -156,10 +169,49 @@ def update_user(emailid):
 
 @route('/course/enroll', method='PUT')
 def enroll_course():
-    print "hi1"
-    email = request.args.get('email') #str(request.query.get("email")) #request.query.get("email")
-    print email
+    status=None
+    data = request.body.readline()
+    data = data.split("?")
+    email = data[0].split("=")[1]
+    courseid = data[1].split("=")[1]
+    result=room.enroll_course(courseid,email)
+    if result == 500 :
+        response.status = 500
+        status={"success":False}
+    elif result == 400 :
+        response.status = 400
+        status={"success":False}
+    elif result == 200 :
+        response.status = 200
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
     
+    
+@route('/course/drop', method='PUT')
+def drop_course():
+    status=None
+    data = request.body.readline()
+    data = data.split("?")
+    email = data[0].split("=")[1]
+    courseid = data[1].split("=")[1]
+    result=room.drop_course(courseid,email)
+    if result == 500 :
+        response.status = 500
+        status={"success":False}
+    elif result == 400 :
+        response.status = 400
+        status={"success":False}
+    elif result == 200 :
+        response.status = 200
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
+
 @route('/moo/ping', method='GET')
 def ping():
    return 'ping %s - %s' % (socket.gethostname(),time.ctime())
