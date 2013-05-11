@@ -61,6 +61,13 @@ class Room(object):
 
    def update_user(self,emailid):
         return self.__store.update_user(emailid)
+
+   def enroll_course(self,courseid, emailid):
+        return self.__store.enroll_course(courseid, emailid)
+
+   def drop_course(self,courseid, emailid):
+        return self.__store.drop_course(courseid, emailid)
+    
    #
    # example: find data
    #

@@ -80,12 +80,10 @@ def add_category():
         status ={"success":False}
     response.status=result['resp_code']
 
-<<<<<<< HEAD
     fmt = __format(request)
     response.content_type = __response_format(fmt)
     return status
     
-=======
 #
 #
 @route('/user/:emailid', method='DELETE')
@@ -105,7 +103,6 @@ def delete_user(emailid):
     fmt = __format(request)
     response.content_type = __response_format(fmt)
     return status
->>>>>>> 2fe2f1403ae77625356d9d045b9191b45c301551
 
 #
 #
@@ -129,10 +126,49 @@ def update_user(emailid):
 
 @route('/course/enroll', method='PUT')
 def enroll_course():
-    print "hi1"
-    email = request.args.get('email') #str(request.query.get("email")) #request.query.get("email")
-    print email
+    status=None
+    data = request.body.readline()
+    data = data.split("?")
+    email = data[0].split("=")[1]
+    courseid = data[1].split("=")[1]
+    result=room.enroll_course(courseid,email)
+    if result == 500 :
+        response.status = 500
+        status={"success":False}
+    elif result == 400 :
+        response.status = 400
+        status={"success":False}
+    elif result == 200 :
+        response.status = 200
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
     
+    
+@route('/course/drop', method='PUT')
+def drop_course():
+    status=None
+    data = request.body.readline()
+    data = data.split("?")
+    email = data[0].split("=")[1]
+    courseid = data[1].split("=")[1]
+    result=room.drop_course(courseid,email)
+    if result == 500 :
+        response.status = 500
+        status={"success":False}
+    elif result == 400 :
+        response.status = 400
+        status={"success":False}
+    elif result == 200 :
+        response.status = 200
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
+
 @route('/moo/ping', method='GET')
 def ping():
    return 'ping %s - %s' % (socket.gethostname(),time.ctime())

@@ -33,7 +33,7 @@ class Storage(object):
           return {"resp_code":respcode,"id":obj_id}
       except:
           print "Server Error"
-          return {"resp_code":500,"id":obj_id}
+          return 500
 
    def get_user(self, emailid):
       print "---> get:user", emailid
@@ -76,6 +76,40 @@ class Storage(object):
           print "Server Error"
           return 500
 
+   def enroll_course(self, courseid, email):
+      try:
+         cnt = self.usercollection.find({"email":email}).count()
+         print "courseid",courseid
+         print "email", email
+         print "cnt",cnt
+         if cnt == 0:
+             return 400     
+         else:
+             self.usercollection.update({"email":email}, 
+                                        {'$push': {'enrolled': courseid}}
+                                        )
+         return 200
+      except:
+         print "Server Error"
+         return 500
+
+
+   def drop_course(self, courseid, email):
+      try:
+         cnt = self.usercollection.find({"email":email}).count()
+         print "courseid",courseid
+         print "email", email
+         print "cnt",cnt
+         if cnt == 0:
+             return 400     
+         else:
+             self.usercollection.update({"email":email}, 
+                                        {'pull': {'enrolled': courseid}}
+                                        )
+         return 200
+      except:
+         print "Server Error"
+         return 500
    def remove(self, name):
       print "---> remove:", name
 
