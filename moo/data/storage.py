@@ -35,6 +35,7 @@ class Storage(object):
           print "Server Error"
           return 500
 
+
    def get_user(self, emailid):
       print "---> get:user", emailid
       try:
@@ -42,8 +43,8 @@ class Storage(object):
           if cnt == 0:
               return 404   
           else:
-              for c in self.usercollection.find({"email":emailid}):
-                  return {"email": c["email"],"own": c["own"],"enrolled": c["enrolled"],"quizzes": c["quizzes"]}
+              for user in self.usercollection.find({"email":emailid}):
+                  return {"email": user["email"],"own": user["own"],"enrolled": user["enrolled"],"quizzes": user["quizzes"]}
       except:
           print "Server Error"
           return 500
@@ -74,10 +75,10 @@ class Storage(object):
               obj_id = userdetails["_id"]
               obj_id= str(obj_id)
               respcode = 409
-          return {"resp_code":respcode,"id":obj_id}
+          return 200
       except:
           print "Server Error"
-          return {"resp_code":500,"id":obj_id}
+          return 500
 
    def enroll_course(self, courseid, email):
       try:
@@ -147,9 +148,41 @@ class Storage(object):
         except:
             print "Server Error"
             return {"resp_code":500,"id":obj_id}
-        query={"name":category[""]}
-   
-   def get_cateogory(self,category):
-       print "---> get category", category
         
+   
+   def get_category(self,category):
+       print "---> get category", category
+       query={"name":category}
+       try:
+           cnt=self.categorycollection.find(query).count()
+           if cnt==0:
+               return 404
+           else:
+               for cat in self.categorycollection.find(query):
+                   return{"name":cat["name"],"description":cat["description"],"status":cat["status"],"createDate":cat["createDate"]}
+       except:
+           print "Server Error"
+           return 500
+                  
+               
+   
+   def update_category(self,category):
+       print "---> get category", category
+       query={"name":category}
+       obj_id=None
+       try:
+           cnt=self.categorycollection.find(query).count()
+           if cnt==0:
+               obj_id = self.categorycollection.update(category)
+               obj_id = str(obj_id) 
+               respcode = 201
+           else:
+               catdetails = self.categorycollection.find({"email":category["email"]})
+               obj_id = catdetails["_id"]
+               obj_id= str(obj_id)
+               respcode = 409
+           return 200    
+       except:
+           print "Server Error"
+           return 500          
        
