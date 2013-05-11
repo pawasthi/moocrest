@@ -104,6 +104,9 @@ def get_category(name):
     response.content_type = __response_format(fmt)
     return result
 
+@route('/category/update/:catname',method='PUT')
+# def update_category():
+    
 #
 #
 @route('/user/:emailid', method='DELETE')
