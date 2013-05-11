@@ -48,78 +48,81 @@ class Room(object):
       self.__store = Storage()
 
 ##user Collection
-   def create_user(self,jsondata):
-        return self.__store.create_user(jsondata)
+   def createUser(self,jsondata):
+        return self.__store.createUser(jsondata)
     
-   def get_user(self,emailid):
-        return self.__store.get_user(emailid)
+   def getUser(self,emailid):
+        return self.__store.getUser(emailid)
     
-   def update_user(self,emailid):
-        return self.__store.update_user(emailid)
+   def updateUser(self,emailid):
+        return self.__store.updateUser(emailid)
     
-   def delete_user(self,emailid):
-        return self.__store.delete_user(emailid)
+   def deleteUser(self,emailid):
+        return self.__store.deleteUser(emailid)
 
-   def enroll_course(self,courseid, emailid):
-        return self.__store.enroll_course(courseid, emailid)
+   def enrollCourse(self,courseid, emailid):
+        return self.__store.enrollCourse(courseid, emailid)
 
-   def drop_course(self,courseid, emailid):
-        return self.__store.drop_course(courseid, emailid)
+   def dropCourse(self,courseid, emailid):
+        return self.__store.dropCourse(courseid, emailid)
 
 ##Category Collection
-   def insert_category(self,category):
-       return self.__store.insert_category(category) 
+   def insertCategory(self,category):
+       return self.__store.insertCategory(category) 
     
-   def get_category(self,category):
-       return self.__store.get_category(category) 
+   def getCategory(self,category):
+       return self.__store.getCategory(category) 
+
+   def listCategory(self):
+        return self.__store.listCategory()
 
 ##Course Collection
-   def add_course(self,jsondata):
-        return self.__store.add_course(jsondata)
+   def addCourse(self,jsondata):
+        return self.__store.addCourse(jsondata)
 
-   def get_course(self,courseid):
-        return self.__store.get_course(courseid)
+   def getCourse(self,courseid):
+        return self.__store.getCourse(courseid)
     
-   def update_course(self,courseid,jsondata):
-        return self.__store.update_course(courseid,jsondata)
+   def updateCourse(self,courseid,jsondata):
+        return self.__store.updateCourse(courseid,jsondata)
     
-   def delete_course(self,courseid):
-        return self.__store.delete_course(courseid)
+   def deleteCourse(self,courseid):
+        return self.__store.deleteCourse(courseid)
 
-   def list_course(self):
-        return self.__store.list_course()
+   def listCourse(self):
+        return self.__store.listCourse()
 
 ##Quiz collections
-   def add_quiz(self,jsondata):
-        return self.__store.add_quiz(jsondata)
+   def addQuiz(self,jsondata):
+        return self.__store.addQuiz(jsondata)
 
-   def get_quiz(self,quizid):
-        return self.__store.get_quiz(quizid)
+   def getQuiz(self,quizid):
+        return self.__store.getQuiz(quizid)
     
-   def update_quiz(self,quizid,jsondata):
-        return self.__store.update_quiz(quizid,jsondata)
+   def updateQuiz(self,quizid,jsondata):
+        return self.__store.updateQuiz(quizid,jsondata)
     
-   def delete_quiz(self,quizid):
-        return self.__store.delete_quiz(quizid)
+   def deleteQuiz(self,quizid):
+        return self.__store.deleteQuiz(quizid)
 
-   def list_quiz(self):
-        return self.__store.list_quiz()
+   def listQuiz(self):
+        return self.__store.listQuiz()
 
 ##Announcement collections
-   def add_announce(self,jsondata):
-        return self.__store.add_announce(jsondata)
+   def addAnnounce(self,jsondata):
+        return self.__store.addAnnounce(jsondata)
 
-   def get_announce(self,announceid):
-        return self.__store.get_announce(announceid)
+   def getAnnounce(self,announceid):
+        return self.__store.getAnnounce(announceid)
     
-   def update_announce(self,announceid,jsondata):
-        return self.__store.update_announce(announceid,jsondata)
+   def updateAnnounce(self,announceid,jsondata):
+        return self.__store.updateAnnounce(announceid,jsondata)
     
-   def delete_announce(self,announceid):
-        return self.__store.delete_announce(announceid)
+   def deleteAnnounce(self,announceid):
+        return self.__store.deleteAnnounce(announceid)
 
-   def list_announce(self):
-        return self.__store.list_announce()
+   def listAnnounce(self):
+        return self.__store.listAnnounce()
 
    # example: find data
    #

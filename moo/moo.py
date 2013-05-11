@@ -38,15 +38,15 @@ def root():
 #
 #
 @route('/user', method='POST')
-def create_user():
-    status=None
-    result=room.create_user(request.json)
-    #print result["id"]
-    if result['resp_code']== 201 :
-        status={"success":True,"id":result["id"]}
+def createUser():
+    
+    respdata=room.createUser(request.json)
+    if respdata['resp_code']== 201 :
+        status={"success":True,"id":respdata["id"]}
+        response.status = 201
     else:
         status ={"success":False}
-        response.status=result['resp_code']
+        response.status=respdata['resp_code']
 
     fmt = __format(request)
     response.content_type = __response_format(fmt)
@@ -56,14 +56,14 @@ def create_user():
 #
 #
 @route('/user/:emailid', method='GET')
-def get_user(emailid):
-    status=None
-    result=room.get_user(emailid)
+def getUser(emailid):
 
-    if result == 404 : 
+    respdata=room.getUser(emailid)
+
+    if respdata == 404 : 
         response.status = 404
         status={"success":False}
-    elif result == 500 :
+    elif respdata == 500 :
         response.status = 500
         status={"success":False}
     else :
@@ -71,19 +71,19 @@ def get_user(emailid):
         
     fmt = __format(request)
     response.content_type = __response_format(fmt)
-    return result
+    return respdata
 
 #
 #
 @route('/user/:emailid', method='DELETE')
-def delete_user(emailid):
-    status=None
-    result=room.delete_user(emailid)
+def deleteUser(emailid):
 
-    if result == 404 : 
+    respdata=room.deleteUser(emailid)
+
+    if respdata == 404 : 
         response.status = 404
         status={"success":False}
-    elif result == 500 :
+    elif respdata == 500 :
         response.status = 500
         status={"success":False}
     else :
@@ -96,14 +96,14 @@ def delete_user(emailid):
 #
 #
 @route('/user/update/:emailid', method='PUT')
-def update_user(emailid):
-    status=None
-    result=room.update_user(request.json)
+def updateUser(emailid):
 
-    if result == 404 : 
+    respdata=room.updateUser(request.json)
+
+    if respdata == 404 : 
         response.status = 404
         status={"success":False}
-    elif result == 500 :
+    elif respdata == 500 :
         response.status = 500
         status={"success":False}
     else :
@@ -114,20 +114,20 @@ def update_user(emailid):
     return status
 
 @route('/course/enroll', method='PUT')
-def enroll_course():
-    status=None
+def enrollCourse():
+ 
     data = request.body.readline()
     data = data.split("?")
     email = data[0].split("=")[1]
     courseid = data[1].split("=")[1]
-    result=room.enroll_course(courseid,email)
-    if result == 500 :
+    respdata=room.enrollCourse(courseid,email)
+    if respdata == 500 :
         response.status = 500
         status={"success":False}
-    elif result == 400 :
+    elif respdata == 400 :
         response.status = 400
         status={"success":False}
-    elif result == 200 :
+    elif respdata == 200 :
         response.status = 200
         status={"success":True}
         
@@ -137,22 +137,22 @@ def enroll_course():
     
     
 @route('/course/drop', method='PUT')
-def drop_course():
-    status=None
+def dropCourse():
+
     data = request.body.readline()
     data = data.split("?")
     email = data[0].split("=")[1]
     courseid = data[1].split("=")[1]
     print email
     print courseid
-    result=room.drop_course(courseid,email)
-    if result == 500 :
+    respdata=room.dropCourse(courseid,email)
+    if respdata == 500 :
         response.status = 500
         status={"success":False}
-    elif result == 400 :
+    elif respdata == 400 :
         response.status = 400
         status={"success":False}
-    elif result == 200 :
+    elif respdata == 200 :
         response.status = 200
         status={"success":True}
         
@@ -165,14 +165,14 @@ def drop_course():
 #
 #
 @route('/course', method='POST')
-def add_course():
-    status=None
-    result=room.add_course(request.json)
-    if result['resp_code']== 201 :
-        status={"success":True,"id":result["id"]}
+def addCourse():
+
+    respdata=room.addCourse(request.json)
+    if respdata['resp_code']== 201 :
+        status={"success":True,"id":respdata["id"]}
     else:
         status ={"success":False}
-        response.status=result['resp_code']
+        response.status=respdata['resp_code']
 
     fmt = __format(request)
     response.content_type = __response_format(fmt)
@@ -181,14 +181,14 @@ def add_course():
 #
 #
 @route('/course/:id', method='GET')
-def get_course(id):
-    status=None
-    result=room.get_course(id)
+def getCourse(id):
 
-    if result == 404 : 
+    respdata=room.getCourse(id)
+
+    if respdata == 404 : 
         response.status = 404
         status={"success":False}
-    elif result == 500 :
+    elif respdata == 500 :
         response.status = 500
         status={"success":False}
     else :
@@ -196,19 +196,19 @@ def get_course(id):
         
     fmt = __format(request)
     response.content_type = __response_format(fmt)
-    return result
+    return respdata
 
 #
 #
 @route('/course/update/:id', method='PUT')
-def update_course(id):
-    status=None
-    result=room.update_course(id,request.json)
+def updateCourse(id):
 
-    if result == 404 : 
+    respdata=room.updateCourse(id,request.json)
+
+    if respdata == 404 : 
         response.status = 404
         status={"success":False}
-    elif result == 500 :
+    elif respdata == 500 :
         response.status = 500
         status={"success":False}
     else :
@@ -221,14 +221,14 @@ def update_course(id):
 #
 #
 @route('/course/:id', method='DELETE')
-def delete_course(id):
-    status=None
-    result=room.delete_course(id)
+def deleteCourse(id):
 
-    if result == 404 : 
+    respdata=room.deleteCourse(id)
+
+    if respdata == 404 : 
         response.status = 404
         status={"success":False}
-    elif result == 500 :
+    elif respdata == 500 :
         response.status = 500
         status={"success":False}
     else :
@@ -241,14 +241,14 @@ def delete_course(id):
 #
 #
 @route('/course/list', method='GET')
-def list_course():
-    status=None
-    result=room.list_course()
+def listCourse():
 
-    if result == 404 : 
+    respdata=room.listCourse()
+
+    if respdata == 404 : 
         response.status = 404
         status={"success":False}
-    elif result == 500 :
+    elif respdata == 500 :
         response.status = 500
         status={"success":False}
     else :
@@ -256,21 +256,21 @@ def list_course():
         
     fmt = __format(request)
     response.content_type = __response_format(fmt)
-    return result
+    return respdata
 
 ##Quiz collections
 
 #
 #
 @route('/quizzes', method='POST')
-def add_quiz():
-    status=None
-    result=room.add_quiz(request.json)
-    if result['resp_code']== 201 :
-        status={"success":True,"id":result["id"]}
+def addQuiz():
+
+    respdata=room.addQuiz(request.json)
+    if respdata['resp_code']== 201 :
+        status={"success":True,"id":respdata["id"]}
     else:
         status ={"success":False}
-        response.status=result['resp_code']
+        response.status=respdata['resp_code']
 
     fmt = __format(request)
     response.content_type = __response_format(fmt)
@@ -279,14 +279,14 @@ def add_quiz():
 #
 #
 @route('/quiz/:id', method='GET')
-def get_quiz(id):
-    status=None
-    result=room.get_quiz(id)
+def getQuiz(id):
 
-    if result == 404 : 
+    respdata=room.getQuiz(id)
+
+    if respdata == 404 : 
         response.status = 404
         status={"success":False}
-    elif result == 500 :
+    elif respdata == 500 :
         response.status = 500
         status={"success":False}
     else :
@@ -294,19 +294,19 @@ def get_quiz(id):
         
     fmt = __format(request)
     response.content_type = __response_format(fmt)
-    return result
+    return respdata
 
 #
 #
 @route('/quiz/:id', method='DELETE')
-def delete_quiz(id):
-    status=None
-    result=room.delete_quiz(id)
+def deleteQuiz(id):
 
-    if result == 404 : 
+    respdata=room.deleteQuiz(id)
+
+    if respdata == 404 : 
         response.status = 404
         status={"success":False}
-    elif result == 500 :
+    elif respdata == 500 :
         response.status = 500
         status={"success":False}
     else :
@@ -319,14 +319,14 @@ def delete_quiz(id):
 #
 #
 @route('/quiz/update/:id', method='PUT')
-def update_quiz(id):
-    status=None
-    result=room.update_quiz(id,request.json)
+def updateQuiz(id):
 
-    if result == 404 : 
+    respdata=room.updateQuiz(id,request.json)
+
+    if respdata == 404 : 
         response.status = 404
         status={"success":False}
-    elif result == 500 :
+    elif respdata == 500 :
         response.status = 500
         status={"success":False}
     else :
@@ -339,14 +339,14 @@ def update_quiz(id):
 #
 #
 @route('/quiz/list', method='GET')
-def list_quiz():
-    status=None
-    result=room.list_quiz()
+def listQuiz():
 
-    if result == 404 : 
+    respdata=room.listQuiz()
+
+    if respdata == 404 : 
         response.status = 404
         status={"success":False}
-    elif result == 500 :
+    elif respdata == 500 :
         response.status = 500
         status={"success":False}
     else :
@@ -354,7 +354,7 @@ def list_quiz():
         
     fmt = __format(request)
     response.content_type = __response_format(fmt)
-    return result
+    return respdata
 
 
 ##Announcement collections
@@ -362,15 +362,14 @@ def list_quiz():
 #
 #
 @route('/announcements', method='POST')
-def add_announce():
-    print "hi"
-    status=None
-    result=room.add_announce(request.json)
-    if result['resp_code']== 201 :
-        status={"success":True,"id":result["id"]}
+def addAnnounce():
+
+    respdata=room.addAnnounce(request.json)
+    if respdata['resp_code']== 201 :
+        status={"success":True,"id":respdata["id"]}
     else:
         status ={"success":False}
-        response.status=result['resp_code']
+        response.status=respdata['resp_code']
 
     fmt = __format(request)
     response.content_type = __response_format(fmt)
@@ -379,14 +378,14 @@ def add_announce():
 #
 #
 @route('/announcement/:id', method='GET')
-def get_announce(id):
-    status=None
-    result=room.get_announce(id)
+def getAnnounce(id):
 
-    if result == 404 : 
+    respdata=room.getAnnounce(id)
+
+    if respdata == 404 : 
         response.status = 404
         status={"success":False}
-    elif result == 500 :
+    elif respdata == 500 :
         response.status = 500
         status={"success":False}
     else :
@@ -394,19 +393,19 @@ def get_announce(id):
         
     fmt = __format(request)
     response.content_type = __response_format(fmt)
-    return result
+    return respdata
 
 #
 #
 @route('/announcement/:id', method='DELETE')
-def delete_announce(id):
-    status=None
-    result=room.delete_announce(id)
+def deleteAnnounce(id):
 
-    if result == 404 : 
+    respdata=room.deleteAnnounce(id)
+
+    if respdata == 404 : 
         response.status = 404
         status={"success":False}
-    elif result == 500 :
+    elif respdata == 500 :
         response.status = 500
         status={"success":False}
     else :
@@ -419,14 +418,14 @@ def delete_announce(id):
 #
 #
 @route('/announcement/update/:id', method='PUT')
-def update_announce(id):
-    status=None
-    result=room.update_announce(id,request.json)
+def updateAnnounce(id):
 
-    if result == 404 : 
+    respdata=room.updateAnnounce(id,request.json)
+
+    if respdata == 404 : 
         response.status = 404
         status={"success":False}
-    elif result == 500 :
+    elif respdata == 500 :
         response.status = 500
         status={"success":False}
     else :
@@ -439,14 +438,14 @@ def update_announce(id):
 #
 #
 @route('/announcement/list', method='GET')
-def list_announce():
-    status=None
-    result=room.list_announce()
+def listAnnounce():
 
-    if result == 404 : 
+    respdata=room.listAnnounce()
+
+    if respdata == 404 : 
         response.status = 404
         status={"success":False}
-    elif result == 500 :
+    elif respdata == 500 :
         response.status = 500
         status={"success":False}
     else :
@@ -454,34 +453,34 @@ def list_announce():
         
     fmt = __format(request)
     response.content_type = __response_format(fmt)
-    return result
+    return respdata
 
 
 ##Category collections
 
 @route('/category',method= 'POST')
-def add_category():
-    status=None
-    result=room.insert_category(request.json)
-    if result['resp_code']== 201 :
-        status={"success":True,"id":result["id"]}
+def addCategory():
+
+    respdata=room.insertCategory(request.json)
+    if respdata['resp_code']== 201 :
+        status={"success":True,"id":respdata["id"]}
     else:
         status ={"success":False}
-    response.status=result['resp_code']
+    response.status=respdata['resp_code']
     
     fmt = __format(request)
     response.content_type = __response_format(fmt)
     return status
 
 @route('/category/:name', method='GET')
-def get_category(name):
-    status=None
-    result=room.get_category(name)
+def getCategory(name):
 
-    if result == 404 : 
+    respdata=room.getCategory(name)
+
+    if respdata == 404 : 
         response.status = 404
         status={"success":False}
-    elif result == 500 :
+    elif respdata == 500 :
         response.status = 500
         status={"success":False}
     else :
@@ -489,13 +488,9 @@ def get_category(name):
         
     fmt = __format(request)
     response.content_type = __response_format(fmt)
-    return result
+    return respdata
 
-@route('/category/update/:catname',method='PUT')
-def update_category():
-    fmt = __format(request)
-    response.content_type = __response_format(fmt)
-    return status
+
 
 @route('/moo/ping', method='GET')
 def ping():

@@ -4,6 +4,6 @@
 
 echo -e "\n"
 
-curl -i -X DELETE http://localhost:8080/quiz/518e7d79e4c751270e80a5fe
+curl -i -X DELETE http://localhost:8080/quiz/518eb2bbe4c7513a1964aef7
 
 echo -e "\n"
