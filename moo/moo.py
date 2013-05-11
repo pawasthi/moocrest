@@ -70,6 +70,7 @@ def get_user(emailid):
     fmt = __format(request)
     response.content_type = __response_format(fmt)
     return result
+
 @route('/category',method= 'POST')
 def add_category():
     status=None
@@ -85,6 +86,23 @@ def add_category():
     response.content_type = __response_format(fmt)
     return status
     
+@route('/category/:name', method='GET')
+def get_category(name):
+    status=None
+    result=room.get_category(name)
+
+    if result == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif result == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return result
 
 #
 #
