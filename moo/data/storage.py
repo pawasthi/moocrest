@@ -92,3 +92,23 @@ class Storage(object):
          return rtn
       else:
          return None
+     
+   def insert_category(self,category):
+        print "---> create:user", category
+        query={"name":category["name"]}
+        try:
+           cnt=self.categorycollection.find(query).count()  
+           if cnt==0:
+               obj_id = self.categorycollection.insert(category)
+               obj_id = str(obj_id)
+               respcode=201
+           else: 
+               categorydetails=self.categorycollection.find(query) 
+               obj_id = str(obj_id)
+               respcode=409
+           return {"resp_code":respcode,"id":obj_id} 
+        except:
+            print "Server Error"
+            return {"resp_code":500,"id":obj_id}
+                         
+

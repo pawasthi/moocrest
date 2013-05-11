@@ -70,7 +70,22 @@ def get_user(emailid):
     fmt = __format(request)
     response.content_type = __response_format(fmt)
     return result
+@route('/category',method= 'POST')
+def add_category():
+    status=None
+    result=room.insert_category(request.json)
+    if result['resp_code']== 201 :
+        status={"success":True,"id":result["id"]}
+    else:
+        status ={"success":False}
+    response.status=result['resp_code']
 
+<<<<<<< HEAD
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
+    
+=======
 #
 #
 @route('/user/:emailid', method='DELETE')
@@ -90,6 +105,7 @@ def delete_user(emailid):
     fmt = __format(request)
     response.content_type = __response_format(fmt)
     return status
+>>>>>>> 2fe2f1403ae77625356d9d045b9191b45c301551
 
 #
 #
