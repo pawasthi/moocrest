@@ -148,7 +148,7 @@ class Storage(object):
         except:
             print "Server Error"
             return {"resp_code":500,"id":obj_id}
-        query={"name":category[""]}
+        
    
    def get_category(self,category):
        print "---> get category", category
