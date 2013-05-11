@@ -62,19 +62,22 @@ class Storage(object):
           return 500
 
    def update_user(self, jsondata):
-      #print "---> update:user", jsondata
+      print "---> update:user", jsondata
       try:
           cnt = self.usercollection.find({"email":jsondata["email"]}).count()
-          print "cnt",cnt
           if cnt == 0:
-              return 400     
-          else:
-              obj_id = self.usercollection.update({"email": jsondata["email"]}, jsondata)
+              obj_id = self.usercollection.update(jsondata)
               obj_id = str(obj_id) 
-              return 200
+              respcode = 201     
+          else:
+              userdetails = self.usercollection.find({"email":jsondata["email"]})
+              obj_id = userdetails["_id"]
+              obj_id= str(obj_id)
+              respcode = 409
+          return {"resp_code":respcode,"id":obj_id}
       except:
           print "Server Error"
-          return 500
+          return {"resp_code":500,"id":obj_id}
 
    def remove(self, name):
       print "---> remove:", name
@@ -94,7 +97,7 @@ class Storage(object):
          return None
      
    def insert_category(self,category):
-        print "---> create:user", category
+        print "---> create:category", category
         query={"name":category["name"]}
         try:
            cnt=self.categorycollection.find(query).count()  
@@ -110,5 +113,9 @@ class Storage(object):
         except:
             print "Server Error"
             return {"resp_code":500,"id":obj_id}
-                         
-
+        query={"name":category[""]}
+   
+   def get_cateogory(self,category):
+       print "---> get category", category
+        
+       
