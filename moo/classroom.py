@@ -80,6 +80,9 @@ class Room(object):
    def get_course(self,courseid):
         return self.__store.get_course(courseid)
     
+   def update_course(self,courseid,jsondata):
+        return self.__store.update_course(courseid,jsondata)
+    
    # example: find data
    #
    def find(self,name):

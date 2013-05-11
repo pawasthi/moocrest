@@ -130,12 +130,11 @@ class Storage(object):
 
    def get_course(self,id):
       print "---> get:course", id
-      try:
-          
+      try:    
           id = ObjectId(id)
-          print id
+          #print id
           cnt = self.coursecollection.find({"_id":id}).count()
-          print "cnt", cnt
+          #print "cnt", cnt
           if cnt == 0:
               return 404   
           else:
@@ -145,6 +144,22 @@ class Storage(object):
                           "dept":course["dept"],"term":course["term"],"year":course["year"],"instructor":course["instructor"],
                           "days":course["days"],"hours":course["hours"],"Description":course["Description"],
                           "attachment":course["attachment"],"version":course["version"]}
+      except:
+          print "Server Error"
+          return 500
+      
+   def update_course(self,courseid,jsondata):
+      print "---> update:course", jsondata
+      try:
+          id = ObjectId(courseid)
+          print id
+          cnt = self.coursecollection.find({"_id":id}).count()
+          print "cnt" , cnt
+          if cnt == 0:
+              return 201     
+          else:
+              self.coursecollection.update({"_id":id}, jsondata)
+              return 200
       except:
           print "Server Error"
           return 500

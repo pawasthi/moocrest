@@ -196,6 +196,27 @@ def get_course(id):
     fmt = __format(request)
     response.content_type = __response_format(fmt)
     return result
+
+#
+#
+@route('/course/update/:id', method='PUT')
+def update_course(id):
+    status=None
+    result=room.update_course(id,request.json)
+
+    if result == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif result == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
+
 ##Category collections
 
 @route('/category',method= 'POST')
