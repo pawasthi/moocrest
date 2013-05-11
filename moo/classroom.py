@@ -82,6 +82,9 @@ class Room(object):
     
    def update_course(self,courseid,jsondata):
         return self.__store.update_course(courseid,jsondata)
+
+   def list_course(self):
+        return self.__store.list_course()
     
    # example: find data
    #

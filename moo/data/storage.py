@@ -163,6 +163,20 @@ class Storage(object):
       except:
           print "Server Error"
           return 500
+
+   def list_course(self):
+      print "---> list:course"
+      try:    
+          courselist = []
+          for course in self.coursecollection.find():
+               course["_id"] = str(course["_id"])
+               courselist.append(course)
+          
+          return { "success" : True, "list" : courselist };
+      
+      except:
+          print "Server Error"
+          return 500
       
    def remove(self, name):
       print "---> remove:", name
@@ -180,6 +194,7 @@ class Storage(object):
          return rtn
       else:
          return None
+     
 ## category collections
    def insert_category(self,category):
         print "---> create:category", category
