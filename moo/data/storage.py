@@ -15,6 +15,7 @@ class Storage(object):
       self.usercollection = db['usercollection']
       self.categorycollection=db['categorycollection']
       self.coursecollection=db['coursecollection']
+      self.quizcollection=db['quizcollection']
       # self.data = {}
       # for demo
       # self.data['created'] = time.ctime()
@@ -173,6 +174,81 @@ class Storage(object):
                courselist.append(course)
           
           return { "success" : True, "list" : courselist };
+      
+      except:
+          print "Server Error"
+          return 500
+
+##Quiz collection
+
+   def add_quiz(self, jsondata):
+      print "---> add_quiz:", jsondata
+      try:
+          obj_id = self.quizcollection.insert(jsondata)
+          obj_id = str(obj_id) 
+          respcode = 201     
+          return {"resp_code":respcode,"id":obj_id}
+      
+      except:
+          print "Server Error"
+          return 500
+
+   def get_quiz(self,id):
+      print "---> get:course", id
+      try:    
+          id = ObjectId(id)
+          #print id
+          cnt = self.quizcollection.find({"_id":id}).count()
+          #print "cnt", cnt
+          if cnt == 0:
+              return 404   
+          else:
+              for quiz in self.quizcollection.find({"_id":id}):
+                  return {"id": str(id),"courseId": quiz["courseId"],"questions": quiz["questions"]}
+      except:
+          print "Server Error"
+          return 500
+
+   def update_quiz(self,quizid,jsondata):
+      print "---> update:quiz", jsondata
+      try:
+          id = ObjectId(quizid)
+          print id
+          cnt = self.quizcollection.find({"_id":id}).count()
+          print "cnt" , cnt
+          if cnt == 0:
+              return 201     
+          else:
+              self.quizcollection.update({"_id":id}, jsondata)
+              return 200
+      except:
+          print "Server Error"
+          return 500
+
+   def delete_quiz(self, quizid):
+      print "---> delete:quiz", quizid
+      try:
+          id = ObjectId(quizid)
+          print id
+          cnt = self.quizcollection.find({"_id":id}).count()
+          if cnt == 0:
+              return 404   
+          else:
+              self.quizcollection.remove({"_id":id})     
+              return 200 
+      except:
+          print "Server Error"
+          return 500
+
+   def list_quiz(self):
+      print "---> list:quiz"
+      try:    
+          quizlist = []
+          for quiz in self.quizcollection.find():
+               quiz["_id"] = str(quiz["_id"])
+               quizlist.append(quiz)
+          
+          return { "success" : True, "list" : quizlist };
       
       except:
           print "Server Error"

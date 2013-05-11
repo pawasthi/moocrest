@@ -85,7 +85,22 @@ class Room(object):
 
    def list_course(self):
         return self.__store.list_course()
+
+##Quiz collections
+   def add_quiz(self,jsondata):
+        return self.__store.add_quiz(jsondata)
+
+   def get_quiz(self,quizid):
+        return self.__store.get_quiz(quizid)
     
+   def update_quiz(self,quizid,jsondata):
+        return self.__store.update_quiz(quizid,jsondata)
+    
+   def delete_quiz(self,quizid):
+        return self.__store.delete_quiz(quizid)
+
+   def list_quiz(self):
+        return self.__store.list_quiz()
    # example: find data
    #
    def find(self,name):

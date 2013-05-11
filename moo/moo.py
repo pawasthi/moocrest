@@ -237,6 +237,104 @@ def list_course():
     response.content_type = __response_format(fmt)
     return result
 
+##Quiz collections
+
+#
+#
+@route('/quizzes', method='POST')
+def add_quiz():
+    status=None
+    result=room.add_quiz(request.json)
+    if result['resp_code']== 201 :
+        status={"success":True,"id":result["id"]}
+    else:
+        status ={"success":False}
+        response.status=result['resp_code']
+
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
+
+#
+#
+@route('/quiz/:id', method='GET')
+def get_quiz(id):
+    status=None
+    result=room.get_quiz(id)
+
+    if result == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif result == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return result
+
+#
+#
+@route('/quiz/:id', method='DELETE')
+def delete_quiz(id):
+    status=None
+    result=room.delete_quiz(id)
+
+    if result == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif result == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
+
+#
+#
+@route('/quiz/update/:id', method='PUT')
+def update_quiz(id):
+    status=None
+    result=room.update_quiz(id,request.json)
+
+    if result == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif result == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
+
+#
+#
+@route('/quiz/list', method='GET')
+def list_quiz():
+    status=None
+    result=room.list_quiz()
+
+    if result == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif result == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return result
+
 ##Category collections
 
 @route('/category',method= 'POST')
