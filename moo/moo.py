@@ -83,7 +83,7 @@ def add_category():
     response.status=result['resp_code']
 
 
-<<<<<<< HEAD
+
 @route('/category/:name', method='GET')
 def get_category(name):
     status=None
@@ -102,14 +102,11 @@ def get_category(name):
     response.content_type = __response_format(fmt)
     return result
 
-@route('/category/update/:catname',method='PUT')
-# def update_category():
-=======
-    fmt = __format(request)
-    response.content_type = __response_format(fmt)
-    return status
+
     
->>>>>>> e68a34be4f2a101cae150e57263f6bdf7e3fc14f
+
+    
+
 
 #
 #

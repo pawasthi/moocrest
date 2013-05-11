@@ -166,23 +166,5 @@ class Storage(object):
                   
                
    
-   def update_category(self,category):
-       print "---> get category", category
-       query={"name":category}
-       obj_id=None
-       try:
-           cnt=self.categorycollection.find(query).count()
-           if cnt==0:
-               obj_id = self.categorycollection.update(category)
-               obj_id = str(obj_id) 
-               respcode = 201
-           else:
-               catdetails = self.categorycollection.find({"email":category["email"]})
-               obj_id = catdetails["_id"]
-               obj_id= str(obj_id)
-               respcode = 409
-           return 200    
-       except:
-           print "Server Error"
-           return 500          
+   
        
