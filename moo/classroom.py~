@@ -67,7 +67,6 @@ class Room(object):
    def update_user(self,emailid):
         return self.__store.update_user(emailid)
 
-# Quiz
    def insert_quiz(self, json_obj):
    	return self.__store.insert_quiz(json_obj)
 

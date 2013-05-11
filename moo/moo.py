@@ -36,6 +36,22 @@ def root():
    return 'welcome'
 
 #
+# Quiz
+#
+@route('/quizzes', method='POST')
+def add_quiz():
+   status = None
+   result = room.insert_quiz(request.json)
+   if result["res_code"] == 201:
+      status = {"success" : True, "id": result["id"]}
+   else:
+      status = {"success" : False}
+      
+   response.status = result["res_code"]
+   #response.add_header("Content-Type", "application/json")
+   return status
+
+#
 #
 @route('/user', method='POST')
 def create_user():
@@ -136,6 +152,8 @@ def enroll_course():
 @route('/moo/ping', method='GET')
 def ping():
    return 'ping %s - %s' % (socket.gethostname(),time.ctime())
+
+
 
 #
 # Development only: echo the configuration of the virtual classroom.

@@ -13,6 +13,7 @@ class Storage(object):
       db = connection['moocdb']
       self.usercollection = db['usercollection']
       self.categorycollection=db['categorycollection']
+      self.quizcollection=db['quizcollection']
       # self.data = {}
       # for demo
       # self.data['created'] = time.ctime()
@@ -115,6 +116,22 @@ class Storage(object):
             return {"resp_code":500,"id":obj_id}
         query={"name":category[""]}
    
+#
+# Quizzes - Insert Quiz
+#
+
+   def insert_quiz(self, jsondata):
+      print "---> add:Quiz", jsondata
+      try:
+          obj_id = self.quizcollection.insert(jsondata)
+          obj_id= str(obj_id)
+          respcode = 201
+          return {"res_code":respcode,"id":obj_id}
+      except:
+          print "Server Error"
+          return {"res_code":500,"id":obj_id}
+
+
    def get_cateogory(self,category):
        print "---> get category", category
         
