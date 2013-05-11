@@ -80,12 +80,12 @@ def add_category():
         status ={"success":False}
     response.status=result['resp_code']
 
-<<<<<<< HEAD
+
     fmt = __format(request)
     response.content_type = __response_format(fmt)
     return status
     
-=======
+
 #
 #
 @route('/user/:emailid', method='DELETE')
@@ -105,7 +105,7 @@ def delete_user(emailid):
     fmt = __format(request)
     response.content_type = __response_format(fmt)
     return status
->>>>>>> 2fe2f1403ae77625356d9d045b9191b45c301551
+
 
 @route('/moo/ping', method='GET')
 def ping():

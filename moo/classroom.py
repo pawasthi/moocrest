@@ -58,6 +58,9 @@ class Room(object):
 
    def delete_user(self,emailid):
         return self.__store.delete_user(emailid)
+    
+   def get_category(self,category):
+       return self.__store.get_category(category) 
    #
    # example: find data
    #
