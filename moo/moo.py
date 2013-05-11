@@ -177,6 +177,25 @@ def add_course():
     response.content_type = __response_format(fmt)
     return status
 
+#
+#
+@route('/course/:id', method='GET')
+def get_course(id):
+    status=None
+    result=room.get_course(id)
+
+    if result == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif result == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return result
 ##Category collections
 
 @route('/category',method= 'POST')

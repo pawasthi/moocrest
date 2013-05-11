@@ -76,6 +76,9 @@ class Room(object):
 ##Course Collection
    def add_course(self,jsondata):
         return self.__store.add_course(jsondata)
+
+   def get_course(self,courseid):
+        return self.__store.get_course(courseid)
     
    # example: find data
    #

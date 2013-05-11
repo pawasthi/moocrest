@@ -4,6 +4,7 @@ Storage interface
 
 import time
 from pymongo import Connection
+from bson.objectid import ObjectId
 
 class Storage(object):
  
@@ -126,6 +127,28 @@ class Storage(object):
           print "Server Error"
           return 500
 
+
+   def get_course(self,id):
+      print "---> get:course", id
+      try:
+          
+          id = ObjectId(id)
+          print id
+          cnt = self.coursecollection.find({"_id":id}).count()
+          print "cnt", cnt
+          if cnt == 0:
+              return 404   
+          else:
+              for course in self.coursecollection.find({"_id":id}):
+                  print course["category"]
+                  return {"id":str(id),"category":course["category"],"title":course["title"],"section":course["section"],
+                          "dept":course["dept"],"term":course["term"],"year":course["year"],"instructor":course["instructor"],
+                          "days":course["days"],"hours":course["hours"],"Description":course["Description"],
+                          "attachment":course["attachment"],"version":course["version"]}
+      except:
+          print "Server Error"
+          return 500
+      
    def remove(self, name):
       print "---> remove:", name
 
