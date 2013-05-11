@@ -71,6 +71,25 @@ def get_user(emailid):
     response.content_type = __response_format(fmt)
     return result
 
+#
+#
+@route('/user/:emailid', method='DELETE')
+def delete_user(emailid):
+    status=None
+    result=room.delete_user(emailid)
+
+    if result == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif result == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return status
 
 @route('/moo/ping', method='GET')
 def ping():

@@ -54,11 +54,29 @@ class Storage(object):
           if cnt == 0:
               return 404   
           else:
-              self.user.remove({"email":emailid})     
+              self.usercollection.remove({"email":emailid})     
               return 200 
       except:
           print "Server Error"
           return 500
+
+   def update_user(self, jsondata):
+      print "---> update:user", jsondata
+      try:
+          cnt = self.usercollection.find({"email":jsondata["email"]}).count()
+          if cnt == 0:
+              obj_id = self.usercollection.update(jsondata)
+              obj_id = str(obj_id) 
+              respcode = 201     
+          else:
+              userdetails = self.usercollection.find({"email":jsondata["email"]})
+              obj_id = userdetails["_id"]
+              obj_id= str(obj_id)
+              respcode = 409
+          return {"resp_code":respcode,"id":obj_id}
+      except:
+          print "Server Error"
+          return {"resp_code":500,"id":obj_id}
 
    def remove(self, name):
       print "---> remove:", name
