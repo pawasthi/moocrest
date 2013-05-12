@@ -190,7 +190,7 @@ class Storage(object):
       try:    
           courselist = []
           for course in self.coursecollection.find():
-               course["_id"] = str(course["_id"])
+              # course["_id"] = str(course["_id"])
                courselist.append(course)
           
           return { "success" : True, "list" : courselist };
@@ -384,11 +384,6 @@ class Storage(object):
         except:
             print "Server Error"
             return {"resp_code":500,"id":obj_id}
-<<<<<<< HEAD
-   
-=======
-        
->>>>>>> 3691921b11031e122a5aedf0eafa040abaad3ee6
    
    def get_category(self,category):
        print "---> get category", category

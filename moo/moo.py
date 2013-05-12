@@ -72,7 +72,6 @@ def get_user(emailid):
     response.content_type = __response_format(fmt)
     return result
 
-<<<<<<< HEAD
 @route('/category',method= 'POST')
 def add_category():
     status=None
@@ -117,10 +116,6 @@ def get_category(name):
     response.content_type = __response_format(fmt)
     return result
 
-=======
->>>>>>> 3691921b11031e122a5aedf0eafa040abaad3ee6
-#
-#
 @route('/user/:emailid', method='DELETE')
 def delete_user(emailid):
     status=None
@@ -206,10 +201,7 @@ def drop_course():
     response.content_type = __response_format(fmt)
     return status
 
-<<<<<<< HEAD
 
-=======
-## Course collections
 
 #
 #
@@ -545,7 +537,6 @@ def update_category():
     fmt = __format(request)
     response.content_type = __response_format(fmt)
     return status
->>>>>>> 3691921b11031e122a5aedf0eafa040abaad3ee6
 
 @route('/moo/ping', method='GET')
 def ping():

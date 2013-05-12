@@ -96,14 +96,12 @@ class Room(object):
    def get_quiz(self,quizid):
         return self.__store.get_quiz(quizid)
     
-<<<<<<< HEAD
 #   def insert_quiz(self, json_obj):
  #      return self.__store.insert_quiz(json_obj) 
 #
    def list_category(self):
        return self.__store.list_category()
    
-=======
    def update_quiz(self,quizid,jsondata):
         return self.__store.update_quiz(quizid,jsondata)
     
@@ -128,7 +126,6 @@ class Room(object):
 
    def list_announce(self):
         return self.__store.list_announce()
->>>>>>> 3691921b11031e122a5aedf0eafa040abaad3ee6
 
    # example: find data
    #
