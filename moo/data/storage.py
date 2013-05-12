@@ -22,43 +22,44 @@ class Storage(object):
       # self.data['created'] = time.ctime()
 
 ##User Collections
-   def create_user(self, jsondata):
-      print "---> create:user", jsondata
+   def createUser(self, inputjson):
+      print "In createUser", inputjson
       try:
-          cnt = self.usercollection.find({"email":jsondata["email"]}).count()
+          cnt = self.usercollection.find({"email":inputjson["email"]}).count()
           #print cnt
           if cnt == 0:
-              obj_id = self.usercollection.insert(jsondata)
-              obj_id = str(obj_id) 
-              respcode = 201     
-              return {"resp_code":respcode,"id":obj_id}
+              collid = str(self.usercollection.insert(inputjson))      
+              return {"resp_code":201,
+                      "id":collid}
           else:
-              userdetails = self.usercollection.find({"email":jsondata["email"]})
-              #print userdetails
-              #obj_id = userdetails["_id"]
-              #obj_id= str(obj_id)
-              respcode = 409
-              return {"resp_code":respcode}
+              userdetails = self.usercollection.find({"email":inputjson["email"]})
+              return {"resp_code":409}
       except:
           print "Server Error"
           return 500
 
 
-   def get_user(self, emailid):
-      print "---> get:user", emailid
+   def getUser(self, emailid):
+      print "In getUser", emailid
+      repstr = {}
       try:
           cnt = self.usercollection.find({"email":emailid}).count()
+          print cnt
           if cnt == 0:
               return 404   
           else:
               for user in self.usercollection.find({"email":emailid}):
-                  return {"email": user["email"],"own": user["own"],"enrolled": user["enrolled"],"quizzes": user["quizzes"]}
+                  repstr = {"email": user["email"],
+                            "own": user["own"],
+                            "enrolled": user["enrolled"],
+                            "quizzes": user["quizzes"]}
+                  return repstr
       except:
           print "Server Error"
           return 500
 
-   def delete_user(self, emailid):
-      print "---> delete:user", emailid
+   def deleteUser(self, emailid):
+      print "In deleteUser", emailid
       try:
           cnt = self.usercollection.find({"email":emailid}).count()
           if cnt == 0:
@@ -70,26 +71,27 @@ class Storage(object):
           print "Server Error"
           return 500
 
-   def update_user(self, jsondata):
-      print "---> update:user", jsondata
+   def updateUser(self, inputjson):
+      print "In updateUser", inputjson
       try:
-          cnt = self.usercollection.find({"email":jsondata["email"]}).count()
+          cnt = self.usercollection.find({"email":inputjson["email"]}).count()
           print "cnt" , cnt
           if cnt == 0:
               return 201     
           else:
-              self.usercollection.update({"email": jsondata["email"]}, jsondata)
+              self.usercollection.update({"email": inputjson["email"]}, inputjson)
               return 200
       except:
           print "Server Error"
           return 500
 
-   def enroll_course(self, courseid, email):
+   def enrollCourse(self, courseid, email):
+      print "In enrollCourse", courseid, email
       try:
          cnt = self.usercollection.find({"email":email}).count()
-         print "courseid",courseid
-         print "email", email
-         print "cnt",cnt
+         #print "courseid",courseid
+         #print "email", email
+         #print "cnt",cnt
          if cnt == 0:
              return 400     
          else:
@@ -102,12 +104,13 @@ class Storage(object):
          return 500
 
 
-   def drop_course(self, courseid, email):
+   def dropCourse(self, courseid, email):
+      print "In dropCourse", courseid, email
       try:
          cnt = self.usercollection.find({"email":email}).count()
-         print "courseid",courseid
-         print "email", email
-         print "cnt",cnt
+         #print "courseid",courseid
+         #print "email", email
+         #print "cnt",cnt
          if cnt == 0:
              return 400     
          else:
@@ -121,23 +124,22 @@ class Storage(object):
 
 ##Course collections
 
-   def add_course(self, jsondata):
-      print "---> add_course:", jsondata
+   def addCourse(self, inputjson):
+      print "In addCourse", inputjson
       try:
-          obj_id = self.coursecollection.insert(jsondata)
-          obj_id = str(obj_id) 
-          respcode = 201     
-          return {"resp_code":respcode,"id":obj_id}
+          collid = str(self.coursecollection.insert(inputjson))  
+          return {"resp_code":201,"id":collid}
       
       except:
           print "Server Error"
           return 500
 
 
-   def get_course(self,id):
-      print "---> get:course", id
+   def getCourse(self,id):
+      print "In getCourse", id
       try:    
           id = ObjectId(id)
+          repstr = {}
           #print id
           cnt = self.coursecollection.find({"_id":id}).count()
           #print "cnt", cnt
@@ -145,33 +147,41 @@ class Storage(object):
               return 404   
           else:
               for course in self.coursecollection.find({"_id":id}):
-                  print course["category"]
-                  return {"id":str(id),"category":course["category"],"title":course["title"],"section":course["section"],
-                          "dept":course["dept"],"term":course["term"],"year":course["year"],"instructor":course["instructor"],
-                          "days":course["days"],"hours":course["hours"],"Description":course["Description"],
-                          "attachment":course["attachment"],"version":course["version"]}
+                  #print course["category"]
+                  repstr = {"id":str(id),
+                          "category":course["category"],
+                          "title":course["title"],
+                          "section":course["section"],
+                          "dept":course["dept"],
+                          "term":course["term"],
+                          "year":course["year"],
+                          "instructor":course["instructor"],
+                          "days":course["days"],
+                          "hours":course["hours"],
+                          "Description":course["Description"],
+                          "attachment":course["attachment"],
+                          "version":course["version"]}
+                  return repstr
       except:
           print "Server Error"
           return 500
       
-   def update_course(self,courseid,jsondata):
-      print "---> update:course", jsondata
+   def updateCourse(self,courseid,inputjson):
+      print "In updateCourse",courseid, inputjson
       try:
           id = ObjectId(courseid)
-          print id
           cnt = self.coursecollection.find({"_id":id}).count()
-          print "cnt" , cnt
           if cnt == 0:
               return 201     
           else:
-              self.coursecollection.update({"_id":id}, jsondata)
+              self.coursecollection.update({"_id":id}, inputjson)
               return 200
       except:
           print "Server Error"
           return 500
 
-   def delete_course(self, courseid):
-      print "---> delete:course", courseid
+   def deleteCourse(self, courseid):
+      print "In deleteCourse", courseid
       try:
           id = ObjectId(courseid)
           print id
@@ -185,12 +195,17 @@ class Storage(object):
           print "Server Error"
           return 500
 
-   def list_course(self):
-      print "---> list:course"
+   def listCourse(self):
+      print "In listCourse"
       try:    
           courselist = []
           for course in self.coursecollection.find():
+<<<<<<< HEAD
               # course["_id"] = str(course["_id"])
+=======
+               course["id"] = str(course["_id"])
+               course["_id"] = str(course["_id"])
+>>>>>>> f608465376ced7f5dfb2f60b2abad838603017a2
                courselist.append(course)
           
           return { "success" : True, "list" : courselist };
@@ -201,21 +216,20 @@ class Storage(object):
 
 ##Quiz collection
 
-   def add_quiz(self, jsondata):
-      print "---> add_quiz:", jsondata
+   def addQuiz(self, inputjson):
+      print "In addQuiz:", inputjson
       try:
-          obj_id = self.quizcollection.insert(jsondata)
-          obj_id = str(obj_id) 
-          respcode = 201     
-          return {"resp_code":respcode,"id":obj_id}
+          collid = str(self.quizcollection.insert(inputjson))      
+          return {"resp_code":201,"id":collid}
       
       except:
           print "Server Error"
           return 500
 
-   def get_quiz(self,id):
-      print "---> get:course", id
+   def getQuiz(self,id):
+      print "In getQuiz", id
       try:    
+          repstr = {}
           id = ObjectId(id)
           #print id
           cnt = self.quizcollection.find({"_id":id}).count()
@@ -224,32 +238,35 @@ class Storage(object):
               return 404   
           else:
               for quiz in self.quizcollection.find({"_id":id}):
-                  return {"id": str(id),"courseId": quiz["courseId"],"questions": quiz["questions"]}
+                  repstr = {"id": str(id),
+                          "courseId": quiz["courseId"],
+                          "questions": quiz["questions"]}
+                  return repstr
       except:
           print "Server Error"
           return 500
 
-   def update_quiz(self,quizid,jsondata):
-      print "---> update:quiz", jsondata
+   def updateQuiz(self,quizid,inputjson):
+      print "In updateQuiz", inputjson
       try:
           id = ObjectId(quizid)
-          print id
+          #print id
           cnt = self.quizcollection.find({"_id":id}).count()
-          print "cnt" , cnt
+          #print "cnt" , cnt
           if cnt == 0:
               return 201     
           else:
-              self.quizcollection.update({"_id":id}, jsondata)
+              self.quizcollection.update({"_id":id}, inputjson)
               return 200
       except:
           print "Server Error"
           return 500
 
-   def delete_quiz(self, quizid):
-      print "---> delete:quiz", quizid
+   def deleteQuiz(self, quizid):
+      print "In deleteQuiz", quizid
       try:
           id = ObjectId(quizid)
-          print id
+          #print id
           cnt = self.quizcollection.find({"_id":id}).count()
           if cnt == 0:
               return 404   
@@ -260,12 +277,13 @@ class Storage(object):
           print "Server Error"
           return 500
 
-   def list_quiz(self):
-      print "---> list:quiz"
+   def listQuiz(self):
+      print "In listQuiz"
       try:    
           quizlist = []
           for quiz in self.quizcollection.find():
                quiz["_id"] = str(quiz["_id"])
+               quiz["id"] = str(quiz["_id"])
                quizlist.append(quiz)
           
           return { "success" : True, "list" : quizlist };
@@ -276,55 +294,60 @@ class Storage(object):
       
 ##Announcement collection
 
-   def add_announce(self, jsondata):
-      print "---> add_announce:", jsondata
+   def addAnnounce(self, inputjson):
+      print "In addAnnounce:", inputjson
       try:
-          obj_id = self.announcecollection.insert(jsondata)
-          obj_id = str(obj_id) 
-          respcode = 201     
-          return {"resp_code":respcode,"id":obj_id}
+          collid = str(self.announcecollection.insert(inputjson))    
+          return {"resp_code":201,"id":collid}
       
       except:
           print "Server Error"
           return 500
 
-   def get_announce(self,id):
-      print "---> get:announce", id
+   def getAnnounce(self,id):
+      print "In getAnnounce", id
       try:    
+          repstr = {}
           id = ObjectId(id)
           #print id
           cnt = self.announcecollection.find({"_id":id}).count()
-          print "cnt", cnt
+          #print "cnt", cnt
           if cnt == 0:
               return 404   
           else:
               for announce in self.announcecollection.find({"_id":id}):
-                  return {"id": str(id),"courseId": announce["courseId"],"title": announce["title"],"description":announce["description"],"postDate": announce["postDate"],"status": announce["status"]}
+                  repstr = {"id": str(id),
+                          "courseId": announce["courseId"],
+                          "title": announce["title"],
+                          "description":announce["description"],
+                          "postDate": announce["postDate"],
+                          "status": announce["status"]}
+                  return repstr
       except:
           print "Server Error"
           return 500
 
-   def update_announce(self,announceid,jsondata):
-      print "---> update:announce", jsondata
+   def updateAnnounce(self,announceid,inputjson):
+      print "In updateAnnounce",announceid ,inputjson
       try:
           id = ObjectId(announceid)
-          print id
+          #print id
           cnt = self.announcecollection.find({"_id":id}).count()
-          print "cnt" , cnt
+          #print "cnt" , cnt
           if cnt == 0:
               return 201     
           else:
-              self.announcecollection.update({"_id":id}, jsondata)
+              self.announcecollection.update({"_id":id}, inputjson)
               return 200
       except:
           print "Server Error"
           return 500
 
-   def delete_announce(self, announceid):
-      print "---> delete:announce", announceid
+   def deleteAnnounce(self, announceid):
+      print "In deleteAnnounce", announceid
       try:
           id = ObjectId(announceid)
-          print id
+          #print id
           cnt = self.announcecollection.find({"_id":id}).count()
           if cnt == 0:
               return 404   
@@ -335,12 +358,13 @@ class Storage(object):
           print "Server Error"
           return 500
 
-   def list_announce(self):
-      print "---> list:announce"
+   def listAnnounce(self):
+      print "In listAnnounce"
       try:    
           announcelist = []
           for announce in self.announcecollection.find():
                announce["_id"] = str(announce["_id"])
+               announce["id"] = str(announce["_id"])
                announcelist.append(announce)
           
           return { "success" : True, "list" : announcelist };
@@ -367,10 +391,10 @@ class Storage(object):
          return None
      
 ## category collections
-   def insert_category(self,category):
-        print "---> create:category", category
-        query={"name":category["name"]}
+   def insertCategory(self,category):
+        print "In insertCategory", category
         try:
+<<<<<<< HEAD
            cnt=self.categorycollection.find(query).count()  
            if cnt==0:
                obj_id = self.categorycollection.insert(category)
@@ -388,16 +412,34 @@ class Storage(object):
    def get_category(self,category):
        print "---> get category", category
        query={"name":category}
+=======
+           collid = str(self.categorycollection.insert(category))
+           return {"resp_code":201,"id":collid} 
+
+        except:
+            print "Server Error"
+            return 500
+      
+   def getCategory(self,categoryid):
+       print "In getCategory", categoryid
+
+>>>>>>> f608465376ced7f5dfb2f60b2abad838603017a2
        try:
-           cnt=self.categorycollection.find(query).count()
+           repstr = {}
+           categoryid = ObjectId(categoryid)
+           cnt=self.categorycollection.find({"_id":categoryid}).count()
            if cnt==0:
                return 404
            else:
-               for cat in self.categorycollection.find(query):
-                   return{"name":cat["name"],"description":cat["description"],"status":cat["status"],"createDate":cat["createDate"]}
+               for cat in self.categorycollection.find({"_id":categoryid}):
+                   repstr = {"name":cat["name"],
+                          "description":cat["description"],
+                          "status":cat["status"],
+                          "createDate":cat["createDate"]}
        except:
            print "Server Error"
            return 500
+<<<<<<< HEAD
        
    def insert_quiz(self, jsondata):
        print "---> add:Quiz", jsondata
@@ -420,3 +462,6 @@ class Storage(object):
    
    
        
+=======
+                         
+>>>>>>> f608465376ced7f5dfb2f60b2abad838603017a2
