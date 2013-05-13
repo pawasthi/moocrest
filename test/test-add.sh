@@ -3,5 +3,5 @@
 # test client access to our service
 
 echo -e "\n"
-curl -i -H "Content-Type: application/json" -X POST --data '{"email": "xyz@abc.com","own": [],"enrolled": [],"quizzes": []}'  http://localhost:8080/user
+curl -i -H "Content-Type: application/json" -X POST --data '{"email": "xyz2@abc.com","own": [],"enrolled": [],"quizzes": []}'  http://localhost:8080/user
 echo -e "\n"

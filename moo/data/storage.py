@@ -17,6 +17,7 @@ class Storage(object):
       self.coursecollection=db['coursecollection']
       self.quizcollection=db['quizcollection']
       self.announcecollection=db['announcementcollection']
+      self.categorycollection=db['categorycollection']
       # self.data = {}
       # for demo
       # self.data['created'] = time.ctime()
@@ -29,11 +30,13 @@ class Storage(object):
           #print cnt
           if cnt == 0:
               collid = str(self.usercollection.insert(inputjson))      
-              return {"resp_code":201,
-                      "id":collid}
+              return {"respStatusCode":201,
+                      "id":collid,
+                      "success":True}
           else:
               userdetails = self.usercollection.find({"email":inputjson["email"]})
-              return {"resp_code":409}
+              return {"respStatusCode":409,
+                      "success":False}
       except:
           print "Server Error"
           return 500
@@ -123,12 +126,11 @@ class Storage(object):
          return 500
 
 ##Course collections
-
    def addCourse(self, inputjson):
       print "In addCourse", inputjson
       try:
           collid = str(self.coursecollection.insert(inputjson))  
-          return {"resp_code":201,"id":collid}
+          return {"respStatusCode":201,"id":collid,"success":True}
       
       except:
           print "Server Error"
@@ -216,7 +218,7 @@ class Storage(object):
       print "In addQuiz:", inputjson
       try:
           collid = str(self.quizcollection.insert(inputjson))      
-          return {"resp_code":201,"id":collid}
+          return {"respStatusCode":201,"id":collid,"success":True}
       
       except:
           print "Server Error"
@@ -294,7 +296,7 @@ class Storage(object):
       print "In addAnnounce:", inputjson
       try:
           collid = str(self.announcecollection.insert(inputjson))    
-          return {"resp_code":201,"id":collid}
+          return {"respStatusCode":201,"id":collid,"success":True}
       
       except:
           print "Server Error"
@@ -391,7 +393,7 @@ class Storage(object):
         print "In insertCategory", category
         try:
            collid = str(self.categorycollection.insert(category))
-           return {"resp_code":201,"id":collid} 
+           return {"respStatusCode":201,"id":collid,"success":True} 
 
         except:
             print "Server Error"
@@ -416,3 +418,17 @@ class Storage(object):
            print "Server Error"
            return 500
                          
+   def listCategory(self):
+      print "In listCategory"
+      try:    
+          categorylist = []
+          for category in self.categorycollection.find():
+               category["_id"] = str(category["_id"])
+               category["id"] = str(category["_id"])
+               categorylist.append(category)
+          
+          return { "success" : True, "list" : categorylist };
+      
+      except:
+          print "Server Error"
+          return 500

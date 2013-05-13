@@ -40,17 +40,20 @@ def root():
 @route('/user', method='POST')
 def createUser():
     
+    #try:
     respdata=room.createUser(request.json)
-    if respdata['resp_code']== 201 :
-        status={"success":True,"id":respdata["id"]}
+    if respdata["respStatusCode"]== 201 :
+        status={"success":respdata["success"],"id":respdata["id"]}
         response.status = 201
     else:
-        status ={"success":False}
-        response.status=respdata['resp_code']
+        status ={"success":respdata["success"]}
+        response.status=respdata["respStatusCode"]
 
     fmt = __format(request)
     response.content_type = __response_format(fmt)
     return status
+    #except:
+        
 
 
 #
@@ -67,6 +70,7 @@ def getUser(emailid):
         response.status = 500
         status={"success":False}
     else :
+        response.status = 200
         status={"success":True}
         
     fmt = __format(request)
@@ -168,11 +172,11 @@ def dropCourse():
 def addCourse():
 
     respdata=room.addCourse(request.json)
-    if respdata['resp_code']== 201 :
-        status={"success":True,"id":respdata["id"]}
+    if respdata["respStatusCode"]== 201 :
+        status={"success":respdata["success"],"id":respdata["id"]}
     else:
-        status ={"success":False}
-        response.status=respdata['resp_code']
+        status ={"success":respdata["success"]}
+        response.status=respdata["respStatusCode"]
 
     fmt = __format(request)
     response.content_type = __response_format(fmt)
@@ -266,11 +270,11 @@ def listCourse():
 def addQuiz():
 
     respdata=room.addQuiz(request.json)
-    if respdata['resp_code']== 201 :
-        status={"success":True,"id":respdata["id"]}
+    if respdata["respStatusCode"]== 201 :
+        status={"success":respdata["success"],"id":respdata["id"]}
     else:
-        status ={"success":False}
-        response.status=respdata['resp_code']
+        status ={"success":respdata["success"]}
+        response.status=respdata["respStatusCode"]
 
     fmt = __format(request)
     response.content_type = __response_format(fmt)
@@ -365,11 +369,11 @@ def listQuiz():
 def addAnnounce():
 
     respdata=room.addAnnounce(request.json)
-    if respdata['resp_code']== 201 :
-        status={"success":True,"id":respdata["id"]}
+    if respdata["respStatusCode"]== 201 :
+        status={"success":respdata["success"],"id":respdata["id"]}
     else:
-        status ={"success":False}
-        response.status=respdata['resp_code']
+        status ={"success":respdata["success"]}
+        response.status=respdata["respStatusCode"]
 
     fmt = __format(request)
     response.content_type = __response_format(fmt)
@@ -462,11 +466,11 @@ def listAnnounce():
 def addCategory():
 
     respdata=room.insertCategory(request.json)
-    if respdata['resp_code']== 201 :
-        status={"success":True,"id":respdata["id"]}
+    if respdata["respStatusCode"]== 201 :
+        status={"success":respdata["success"],"id":respdata["id"]}
     else:
-        status ={"success":False}
-    response.status=respdata['resp_code']
+        status ={"success":respdata["success"]}
+    response.status=respdata["respStatusCode"]
     
     fmt = __format(request)
     response.content_type = __response_format(fmt)
@@ -490,7 +494,25 @@ def getCategory(name):
     response.content_type = __response_format(fmt)
     return respdata
 
+#
+#
+@route('/category/list', method='GET')
+def listCategory():
 
+    respdata=room.listCategory()
+
+    if respdata == 404 : 
+        response.status = 404
+        status={"success":False}
+    elif respdata == 500 :
+        response.status = 500
+        status={"success":False}
+    else :
+        status={"success":True}
+        
+    fmt = __format(request)
+    response.content_type = __response_format(fmt)
+    return respdata
 
 @route('/moo/ping', method='GET')
 def ping():
